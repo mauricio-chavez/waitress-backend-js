@@ -1,3 +1,6 @@
+// configura las variables de entorno para development
+require('dotenv').config();
+
 // importacion de paquetes.
 const { ApolloServer, gql } = require('apollo-server');
 
