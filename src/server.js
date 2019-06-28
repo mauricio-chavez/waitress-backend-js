@@ -1,0 +1,46 @@
+// importacion de paquetes.
+const { ApolloServer, gql } = require('apollo-server');
+
+// constante de libros para simular una base de datos
+const books = [
+  {
+    title: 'Harry Potter and the Chamber of Secrets',
+    author: 'J.K. Rowling',
+  },
+  {
+    title: 'Jurassic Park',
+    author: 'Michael Crichton',
+  },
+];
+
+// typeDefs, esquema de graphql que define los datos que seran almacenados en la aplicacion
+// y la logica de negocio (queries y mutations)
+// Queries -- GET -- pide datos
+// Mutations -- PUT, PATCH, DELETE, POST -- sirven para crear datos, eliminarlos y actualizarlos
+const typeDefs = gql`
+  type Book {
+    title: String
+    author: String
+  }
+
+  type Query {
+    books: [Book]
+  }
+`;
+
+// Resolvers funciones que son la logica del negocio y son acciones que define como se
+// comportan las queries y las mutations
+const resolvers = {
+  Query: {
+    books: () => books,
+  },
+};
+
+// instancia de un nuevo servidor de apollo server
+// para iniciarlo es necesario especificar los typeDefs y los resolvers
+const server = new ApolloServer({ typeDefs, resolvers });
+
+// levanta el servidor
+server.listen().then(({ url }) => {
+  console.log(`🚀  Server ready at ${url}`);
+});
