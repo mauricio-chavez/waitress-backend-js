@@ -22,7 +22,8 @@
   "dependencies": {
     "apollo-server": "^2.6.7",
     "dotenv": "^8.0.0",
-    "graphql": "^14.4.0"
+    "graphql": "^14.4.0",
+    "mongoose": "^5.6.1"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"

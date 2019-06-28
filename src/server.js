@@ -3,18 +3,23 @@ require('dotenv').config();
 
 // importacion de paquetes.
 const { ApolloServer, gql } = require('apollo-server');
+const mongoose = require("mongoose");
 
-// constante de libros para simular una base de datos
-const books = [
+// parametros de conexion a la base de datos
+mongoose.connect(
+  process.env.URL_DATABASE,
   {
-    title: 'Harry Potter and the Chamber of Secrets',
-    author: 'J.K. Rowling',
-  },
-  {
-    title: 'Jurassic Park',
-    author: 'Michael Crichton',
-  },
-];
+    useCreateIndex: true,
+    useNewUrlParser: true,
+  }
+);
+
+// crea la conexion a la base de datos
+const mongo = mongoose.connection;
+// listeners, 
+mongo.on('error', console.error.bind(console, 'Error de conexion'));
+mongo.on('open', () => console.log('Conectado !'));
+
 
 // typeDefs, esquema de graphql que define los datos que seran almacenados en la aplicacion
 // y la logica de negocio (queries y mutations)
