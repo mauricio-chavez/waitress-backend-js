@@ -1,5 +1,5 @@
 
-// importar paquetes
+// importar paquetes que vamos a usar
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
@@ -30,6 +30,9 @@ mongoose.Types.ObjectId.prototype.valueOf = function () {
 };
 
 // mongoose hook, hace un hash del password y lo asigna al user.password
+// Paso 1 - validamos si el usuario cambia el password
+// Paso 2 - generamos un hash con una repeticion de 10
+// Paso 3 - hacemos un hash del password y lo asignamos al usuario.
 UserSchema.pre("save", function (next) {
   let user = this;
   if (!user.isModified("password")) { return next(); }
