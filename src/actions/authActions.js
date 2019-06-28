@@ -4,12 +4,12 @@ const { UserModel } = require('../dataBase/models');
 
 const { SchemaDirectiveVisitor, AuthenticationError } = require('apollo-server-express');
 
+// directiva - valida si esta query necesita un token, de lo contrario no permite ejecutar la consulta
 class AuthDirective extends SchemaDirectiveVisitor {
   visitFieldDefinition(field) {
     const { resolve = defaultFieldResolver } = field;
     field.resolve = async function (...args) {
       const ctx = args[2];
-      console.log("TCL: AuthDirective -> visitFieldDefinition -> ctx", ctx)
       if (ctx.user) {
         return await resolve.apply(this, args);
       } else {
@@ -27,7 +27,6 @@ class AuthDirective extends SchemaDirectiveVisitor {
 // paso 4 - si es un token valido busca al usuario en la base de datos y asigna la informacion del usuario en el contexto
 // paso 5 - si hay algun error siempre regresa lo que trae req
 const getContext = (req) => {
-  console.log("TCL: getContext -> req", req)
   const token = req.headers.authorization;
   if (typeof token === typeof undefined) return req;
   return JWT.verify(token, process.env.SECRET, function (err, result) {
