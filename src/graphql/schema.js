@@ -16,6 +16,7 @@ const typeDefs = gql`
     name: String!
     lastName: String!
     email: String!
+    password: String!
   }
 
   type Query {
@@ -27,4 +28,5 @@ const typeDefs = gql`
   }
 `;
 
+// exporta typeDefs
 module.exports = typeDefs;

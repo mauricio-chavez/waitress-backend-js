@@ -26,4 +26,5 @@ const resolvers = {
   }
 }
 
+// exporta resolvers
 module.exports = resolvers;

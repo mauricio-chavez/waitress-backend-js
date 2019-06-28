@@ -21,6 +21,7 @@
   "homepage": "https://github.com/AndersM79/cinta-negra-b31-full#readme",
   "dependencies": {
     "apollo-server": "^2.6.7",
+    "bcrypt": "^3.0.6",
     "dotenv": "^8.0.0",
     "graphql": "^14.4.0",
     "mongoose": "^5.6.1"
