@@ -21,6 +21,17 @@ mongo.on('error', console.error.bind(console, 'Error de conexion'));
 mongo.on('open', () => console.log('Conectado !'));
 
 
+const books = [
+  {
+    title: 'Harry Potter and the Chamber of Secrets',
+    author: 'J.K. Rowling',
+  },
+  {
+    title: 'Jurassic Park',
+    author: 'Michael Crichton',
+  },
+];
+
 // typeDefs, esquema de graphql que define los datos que seran almacenados en la aplicacion
 // y la logica de negocio (queries y mutations)
 // Queries -- GET -- pide datos
