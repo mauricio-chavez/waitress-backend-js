@@ -31,7 +31,15 @@ const createToken = (userData) => {
 
 // sigupAction - funcion que registra un usuario en la base de datos
 const signupAction = (userData) => {
-  return UserModel.create(userData);
+  return new Promise((resolve, reject) => {
+    UserModel.create(userData)
+      .then(user => {
+        console.log("TCL: signupAction -> user", user)
+        const token = createToken(user);
+        resolve({ token, message: `se ha registrado el usuario ${user.name}` })
+      })
+      .catch(reject);
+  });
 }
 
 // loginAction - funcion que loguea al usuario, si sus credenciales son correctas te envia un login de autenticacion.

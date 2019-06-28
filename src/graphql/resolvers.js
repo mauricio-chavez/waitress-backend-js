@@ -22,10 +22,10 @@ const resolvers = {
   },
   Mutation: {
     signup: (paret, args, context, info) => {
-      return signupAction({ ...args.data }).then(() => {
-        return { message: `se ha registrado el usuario ${args.data.name}` }
+      return signupAction({ ...args.data }).then( result => {
+        return result;
       }).catch(err => {
-        return { message: `${err}` }
+        return err;
       });
     },
     login: (parent, args, context, info) => {
