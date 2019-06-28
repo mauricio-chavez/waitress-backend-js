@@ -7,9 +7,17 @@ const { gql } = require('apollo-server');
 // Mutations -- PUT, PATCH, DELETE, POST -- sirven para crear datos, eliminarlos y actualizarlos
 // NOTA: necesita como minimo un query para funcionar.
 
+//@AuthDirective - sirve para decir cuales queries necesitan login para ejecutarce
+
 const typeDefs = gql`
+  directive @AuthDirective on QUERY | FIELD_DEFINITION | FIELD
+
   type Auth {
     token: String
+    message: String
+  }
+
+  type Message {
     message: String
   }
 
@@ -21,7 +29,8 @@ const typeDefs = gql`
   }
 
   type Query {
-    newQuery: Auth
+    queryWithLogin: Message @AuthDirective
+    simpleQuery: Message 
   }
 
   type Mutation {
