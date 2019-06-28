@@ -30,6 +30,10 @@ const createToken = (userData) => {
 }
 
 // sigupAction - funcion que registra un usuario en la base de datos
+// Paso 1 - creamos una promesa.
+// Paso 2 - registramos el usuario en la base de datos
+// Paso 3 - si registra el usuario crea un token con los datos del nuevo usuario
+// Paso 4 - retorna el objeto esperado
 const signupAction = (userData) => {
   return new Promise((resolve, reject) => {
     UserModel.create(userData)
