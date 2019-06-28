@@ -8,8 +8,14 @@ const { gql } = require('apollo-server');
 // NOTA: necesita como minimo un query para funcionar.
 
 const typeDefs = gql`
+  directive @AuthDirective on QUERY | FIELD_DEFINITION | FIELD
+
   type Auth {
     token: String
+    message: String
+  }
+
+  type Message {
     message: String
   }
 
@@ -21,7 +27,8 @@ const typeDefs = gql`
   }
 
   type Query {
-    newQuery: Auth
+    queryWithLogin: Message @AuthDirective
+    simpleQuery: Message 
   }
 
   type Mutation {

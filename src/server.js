@@ -5,9 +5,14 @@ require('dotenv').config();
 const { ApolloServer } = require('apollo-server');
 const mongoose = require("mongoose");
 
+
 // importar variables para configurar el servidor de graphql
 const typeDefs = require('./graphql/schema');
 const resolvers = require('./graphql/resolvers');
+const {
+  getContext,
+  AuthDirective
+} = require('./actions/authActions');
 
 // parametros de conexion a la base de datos
 mongoose.connect(
@@ -26,7 +31,16 @@ mongo.on('open', () => console.log('Conectado !'));
 
 // instancia de un nuevo servidor de apollo server
 // para iniciarlo es necesario especificar los typeDefs y los resolvers
-const server = new ApolloServer({ typeDefs, resolvers });
+// contexto: objeto que se pasa atravez de todos los resolvers y se ejecuta en cada request (query o mutation)
+// directivas: 
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  schemaDirectives: {
+    AuthDirective: AuthDirective
+  },
+  context: async ({ req }) => getContext(req),
+});
 
 // levanta el servidor
 server.listen().then(({ url }) => {

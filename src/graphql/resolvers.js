@@ -16,13 +16,16 @@ const {
 
 const resolvers = {
   Query: {
-    newQuery: () => {
-      return { message: 'Este es un mensaje de prueba' }
+    queryWithLogin: () => {
+      return { message: 'este es un query con login' }
+    },
+    simpleQuery: () => {
+      return { message: 'este es un simple query' }
     }
   },
   Mutation: {
     signup: (paret, args, context, info) => {
-      return signupAction({ ...args.data }).then( result => {
+      return signupAction({ ...args.data }).then(result => {
         return result;
       }).catch(err => {
         return err;
