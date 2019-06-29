@@ -7,6 +7,8 @@ const {
   signupAction,
 } = require('../actions/userActions');
 
+
+
 // Resolvers funciones que son la logica del negocio y son acciones que define como se
 // comportan las queries y las mutations
 // parent --- es lo que necesita la funcion para que funcione como un resolver

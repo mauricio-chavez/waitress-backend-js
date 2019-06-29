@@ -16,7 +16,7 @@ const {
 
 // parametros de conexion a la base de datos
 mongoose.connect(
-  process.env.URL_DATABASE,
+  process.env.DATABASE_URL,
   {
     useCreateIndex: true,
     useNewUrlParser: true,

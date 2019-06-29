@@ -29,7 +29,7 @@ class AuthDirective extends SchemaDirectiveVisitor {
 const getContext = (req) => {
   const token = req.headers.authorization;
   if (typeof token === typeof undefined) return req;
-  return JWT.verify(token, process.env.SECRET, function (err, result) {
+  return JWT.verify(token, process.env.SECRET_KEY, function (err, result) {
     if (err) return req;
     return UserModel.findOne({ _id: result._id }).then((user) => {
       return { ...req, user };

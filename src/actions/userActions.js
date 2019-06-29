@@ -26,7 +26,7 @@ const createToken = (userData) => {
     exp,
   };
 
-  return jwt.sign(payload, process.env.SECRET);
+  return jwt.sign(payload, process.env.SECRET_KEY);
 }
 
 // sigupAction - funcion que registra un usuario en la base de datos

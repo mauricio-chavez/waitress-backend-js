@@ -1,24 +1,24 @@
 {
-  "name": "cinta-negra-b31-full",
+  "name": "waitress-backend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/server.js",
-    "development": "nodemon src/server.js"
+    "develop": "nodemon src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AndersM79/cinta-negra-b31-full.git"
+    "url": "git+https://github.com/mauricio-chavez/waitress-backend.git"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/AndersM79/cinta-negra-b31-full/issues"
+    "url": "https://github.com/mauricio-chavez/waitress-backend/issues"
   },
-  "homepage": "https://github.com/AndersM79/cinta-negra-b31-full#readme",
+  "homepage": "https://github.com/mauricio-chavez/waitress-backend#readme",
   "dependencies": {
     "apollo-server": "^2.6.7",
     "bcrypt": "^3.0.6",
