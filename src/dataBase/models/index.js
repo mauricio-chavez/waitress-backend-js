@@ -1,13 +1,16 @@
-// importamos los paquetes que vamos a utilizar
 const mongoose = require('mongoose');
-//importamos los esquemas
+
 const UserSchema = require('../schemas/userSchema');
+const SessionSchema = require('../schemas/sessionSchema');
+const ItemSchema = require('../schemas/itemSchema');
 
-// creacion de models, crea un model con el nombre de la coleccion y el esquema
-const UserModel = mongoose.model("usersCintaNegra", UserSchema);
+const UserModel = mongoose.model('users', UserSchema);
+const SessionModel = mongoose.model('sessions', SessionSchema);
+const ItemModel = mongoose.model('items', ItemSchema);
 
 
-// exporta un objeto de modelos
 module.exports = {
   UserModel,
+  SessionModel,
+  ItemModel,
 }

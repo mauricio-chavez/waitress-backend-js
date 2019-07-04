@@ -36,11 +36,12 @@ const createToken = (userData) => {
 // Paso 4 - retorna el objeto esperado
 const signupAction = (userData) => {
   return new Promise((resolve, reject) => {
+    userData.items = [];
     UserModel.create(userData)
       .then(user => {
         console.log("TCL: signupAction -> user", user)
         const token = createToken(user);
-        resolve({ token, message: `se ha registrado el usuario ${user.name}` })
+        resolve({ token, message: `se ha registrado a ${user.name}` })
       })
       .catch(reject);
   });

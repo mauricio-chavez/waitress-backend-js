@@ -1,9 +1,6 @@
-
-// importar paquetes que vamos a usar
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
-// crea un nuevo esquema
 const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   name: {
@@ -17,14 +14,20 @@ const UserSchema = new Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   password: {
     type: String,
     required: true,
-  }
-});
+  },
+  items: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'items'
+  }],
+}, {timestamps: true});
 
-// convierte el id en string.
+// TODO Timestamps
+
 mongoose.Types.ObjectId.prototype.valueOf = function () {
   return this.toString();
 };
@@ -45,5 +48,4 @@ UserSchema.pre("save", function (next) {
   })
 });
 
-// exporta el UserSchema
 module.exports = UserSchema;

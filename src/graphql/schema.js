@@ -21,6 +21,28 @@ const typeDefs = gql`
     message: String
   }
 
+  type Item {
+    _id: ID!
+    name: String!
+    amount: Float!
+  }
+
+  type User {
+    _id: ID!
+    name: String!
+    lastName: String!
+    email: String!
+    items: [Item!]
+  }
+
+  type Session {
+    _id: ID!
+    name: String!
+    isActive: Boolean!
+    admin: User!
+    users: [User!]
+  }
+
   input UserInput {
     name: String!
     lastName: String!
@@ -28,14 +50,24 @@ const typeDefs = gql`
     password: String!
   }
 
+  input ItemInput {
+    name: String!
+    amount: Float!
+  }
+
   type Query {
-    queryWithLogin: Message @AuthDirective
-    simpleQuery: Message 
+    getSession(sessionId: ID!): Session @AuthDirective
+    getCurrentUserSession: Session @AuthDirective
   }
 
   type Mutation {
-    signup(data: UserInput): Auth
-    login(email: String!, password: String!): Auth
+    signup(data: UserInput!): Auth
+    login(email: String! password: String!): Auth
+    createSession(name: String!): Session! @AuthDirective
+    addUserToSession(userId: ID! sessionId: ID!): Session! @AuthDirective
+    addItemToUser(userId: ID! item: ItemInput!): User! @AuthDirective
+    addItemToCurrentUser(item: ItemInput!): User! @AuthDirective
+    removeItemFromCurrentUser(itemId: ID!): User! @AuthDirective
   }
 `;
 
