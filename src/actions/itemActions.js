@@ -2,7 +2,7 @@ const { ItemModel, SessionModel, UserModel } = require('../dataBase/models');
 
 const addItemToUserAction = (userId, adminId, itemData) => {
   return new Promise((resolve, reject) => {
-    if (itemData.name.toLowerCase() === 'pizza')
+    if (itemData.name.toLowerCase().includes('pizza'))
       itemData.name += ' 🍕';
 
     ItemModel.create(itemData)
@@ -33,7 +33,7 @@ const addItemToUserAction = (userId, adminId, itemData) => {
               .exec(function (err, item) {
                 if (err) return reject(err);
                 UserModel.findById(userId)
-                  .populate('admin users')
+                  .populate('admin users generalItems')
                   .exec(function(err, user) {
                     if (err) return reject(err);
                     console.log(`The item ${ item.name } has been created sucessfully!`)
@@ -52,7 +52,7 @@ const addItemToUserAction = (userId, adminId, itemData) => {
 
 const addItemToCurrentUserAction = (userId, itemData) => {
   return new Promise((resolve, reject) => {
-    if (itemData.name.toLowerCase() === 'pizza')
+    if (itemData.name.toLowerCase().includes('pizza'))
       itemData.name += ' 🍕';
     ItemModel.create(itemData)
       .then(item => {

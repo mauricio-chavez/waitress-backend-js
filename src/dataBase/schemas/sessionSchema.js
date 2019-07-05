@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const SessionSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   isActive: {
     type: Boolean,
@@ -14,14 +14,20 @@ const SessionSchema = new Schema({
   admin: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'users',
-    required: true
+    required: true,
   },
   users: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'users'
+      ref: 'users',
     }
-  ]
+  ],
+  generalItems: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'items',
+    }
+  ],
 }, {timestamps: true});
 
 mongoose.Types.ObjectId.prototype.valueOf = function() {

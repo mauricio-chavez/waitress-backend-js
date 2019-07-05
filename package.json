@@ -2,7 +2,10 @@
   "name": "waitress-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "engines": {
+    "node": "10.x"
+  },
+  "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
     "develop": "nodemon src/server.js",

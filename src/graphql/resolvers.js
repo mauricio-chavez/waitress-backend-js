@@ -32,13 +32,16 @@ const {
 // info 
 
 const resolvers = {
+
   Query: {
+
     getSession: (parent, args, context, info) => {
       const { sessionId } = args;
       return getSessionAction(sessionId)
         .then(result => result)
         .catch(err => err);
     },
+
     getCurrentUserSession: (parent, args, context, info) => {
       const { id } = context.user;
       return getCurrentUserSessionAction(id)
@@ -46,7 +49,9 @@ const resolvers = {
         .catch(err => err);
     },
   },
+
   Mutation: {
+
     signup: (parent, args, context, info) => {
       return signupAction({ ...args.data }).then(result => {
         return result;
@@ -54,6 +59,7 @@ const resolvers = {
         return err;
       });
     },
+
     login: (parent, args, context, info) => {
       const { email, password } = args;
       return loginAction(email, password).then(result => {
@@ -62,6 +68,7 @@ const resolvers = {
         return error;
       })
     },
+
     createSession: (parent, args, context, info) => {
       const { id } = context.user;
       const { name } = args;
@@ -69,12 +76,14 @@ const resolvers = {
         .then(result => result)
         .catch(error => { throw new UserInputError(error) });
     },
+
     addUserToSession: (parent, args, context, info) => {
       const { userId, sessionId } = args;
       return addUserToSessionAction(userId, sessionId)
         .then(result => result)
         .catch(err => { throw new UserInputError(err) });
     },
+
     addItemToUser: (parent, args, context, info) => {
       const { id } = context.user;
       const { userId } = args;
@@ -82,12 +91,14 @@ const resolvers = {
         .then(result => result)
         .catch(err => { throw new UserInputError(err)});
     },
+
     addItemToCurrentUser: (parent, args, context, info) => {
       const { id } = context.user;
       return addItemToCurrentUserAction(id, { ...args.item })
         .then(result => result)
         .catch(err => err);
     },
+
     removeItemFromCurrentUser: (parent, args, context, info) => {
       const { id } = context.user;
       const { itemId } = args;
@@ -95,6 +106,14 @@ const resolvers = {
         .then(result => result)
         .catch(err => { throw new UserInputError(err)});
     },
+
+    endUpSession: (parent, args, context, info) => {
+      const { id } = context.user;
+      return endUpSessionAction(id)
+        .then(result => result)
+        .catch(err => { throw new UserInputError(err)});
+    },
+
   }
 }
 

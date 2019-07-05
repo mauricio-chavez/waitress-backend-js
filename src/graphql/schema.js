@@ -68,6 +68,7 @@ const typeDefs = gql`
     addItemToUser(userId: ID! item: ItemInput!): User! @AuthDirective
     addItemToCurrentUser(item: ItemInput!): User! @AuthDirective
     removeItemFromCurrentUser(itemId: ID!): User! @AuthDirective
+    endUpSession: Message! @AuthDirective
   }
 `;
 
