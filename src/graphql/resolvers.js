@@ -21,6 +21,7 @@ const {
 const {
   addItemToUserAction,
   addItemToCurrentUserAction,
+  addItemToCurrentSessionAction,
   removeItemFromCurrentUserAction
 } = require('../actions/itemActions');
 
@@ -35,16 +36,23 @@ const resolvers = {
 
   Query: {
 
-    getSession: (parent, args, context, info) => {
+    fakeLogin: async (parent, args, context, info) => {
+      const { email, password } = args;
+      return {
+        message: `Hola, tu correo es ${ email }`,
+      };
+    },
+
+    getSession: async (parent, args, context, info) => {
       const { sessionId } = args;
-      return getSessionAction(sessionId)
+      return await getSessionAction(sessionId)
         .then(result => result)
         .catch(err => err);
     },
 
-    getCurrentUserSession: (parent, args, context, info) => {
+    getCurrentUserSession: async (parent, args, context, info) => {
       const { id } = context.user;
-      return getCurrentUserSessionAction(id)
+      return await getCurrentUserSessionAction(id)
         .then(result => result)
         .catch(err => err);
     },
@@ -52,64 +60,68 @@ const resolvers = {
 
   Mutation: {
 
-    signup: (parent, args, context, info) => {
-      return signupAction({ ...args.data }).then(result => {
-        return result;
-      }).catch(err => {
-        return err;
-      });
-    },
-
-    login: (parent, args, context, info) => {
-      const { email, password } = args;
-      return loginAction(email, password).then(result => {
-        return result;
-      }).catch(error => {
-        return error;
-      })
-    },
-
-    createSession: (parent, args, context, info) => {
-      const { id } = context.user;
-      const { name } = args;
-      return createSessionAction(name, id)
-        .then(result => result)
-        .catch(error => { throw new UserInputError(error) });
-    },
-
-    addUserToSession: (parent, args, context, info) => {
-      const { userId, sessionId } = args;
-      return addUserToSessionAction(userId, sessionId)
-        .then(result => result)
-        .catch(err => { throw new UserInputError(err) });
-    },
-
-    addItemToUser: (parent, args, context, info) => {
-      const { id } = context.user;
-      const { userId } = args;
-      return addItemToUserAction(userId, id, { ...args.item })
-        .then(result => result)
-        .catch(err => { throw new UserInputError(err)});
-    },
-
-    addItemToCurrentUser: (parent, args, context, info) => {
-      const { id } = context.user;
-      return addItemToCurrentUserAction(id, { ...args.item })
+    signup: async (parent, args, context, info) => {
+      return await signupAction({ ...args.data })
         .then(result => result)
         .catch(err => err);
     },
 
-    removeItemFromCurrentUser: (parent, args, context, info) => {
+    login: async (parent, args, context, info) => {
+      const { email, password } = args;
+      return await loginAction(email, password)
+        .then(result => result)
+        .catch(error => error);
+    },
+
+    createSession: async (parent, args, context, info) => {
       const { id } = context.user;
-      const { itemId } = args;
-      return removeItemFromCurrentUserAction(itemId, id)
+      const { name } = args;
+      return await createSessionAction(name, id)
+        .then(result => result)
+        .catch(error => { throw new UserInputError(error) });
+    },
+
+    addUserToSession: async (parent, args, context, info) => {
+      const { userId, sessionId } = args;
+      return await addUserToSessionAction(userId, sessionId)
+        .then(result => result)
+        .catch(err => { throw new UserInputError(err) });
+    },
+
+    addItemToUser: async (parent, args, context, info) => {
+      const { id } = context.user;
+      const { userId } = args;
+      return await addItemToUserAction(userId, id, { ...args.item })
         .then(result => result)
         .catch(err => { throw new UserInputError(err)});
     },
 
-    endUpSession: (parent, args, context, info) => {
+    addItemToCurrentUser: async (parent, args, context, info) => {
       const { id } = context.user;
-      return endUpSessionAction(id)
+      return await addItemToCurrentUserAction(id, { ...args.item })
+        .then(result => result)
+        .catch(err => err);
+    },
+
+    addItemToCurrentSession: async (parent, args, context, info) => {
+      const { id } = context.user;
+      const { item } = args;
+      return await addItemToCurrentSessionAction(item, id)
+        .then(result => result)
+        .catch(err => { throw new UserInputError(err)});
+    },
+
+    removeItemFromCurrentUser: async (parent, args, context, info) => {
+      const { id } = context.user;
+      const { itemId } = args;
+      return await removeItemFromCurrentUserAction(itemId, id)
+        .then(result => result)
+        .catch(err => { throw new UserInputError(err)});
+    },
+
+    endUpSession: async (parent, args, context, info) => {
+      const { id } = context.user;
+      return await endUpSessionAction(id)
         .then(result => result)
         .catch(err => { throw new UserInputError(err)});
     },

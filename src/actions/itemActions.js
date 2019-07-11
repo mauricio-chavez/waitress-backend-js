@@ -33,7 +33,7 @@ const addItemToUserAction = (userId, adminId, itemData) => {
               .exec(function (err, item) {
                 if (err) return reject(err);
                 UserModel.findById(userId)
-                  .populate('admin users generalItems')
+                  .populate('admin users sharedItems')
                   .exec(function(err, user) {
                     if (err) return reject(err);
                     console.log(`The item ${ item.name } has been created sucessfully!`)
@@ -81,6 +81,22 @@ const addItemToCurrentUserAction = (userId, itemData) => {
   });
 }
 
+const addItemToCurrentSessionAction = (item, userId) => {
+  return new Promise((resolve, reject) => {
+    SessionModel.findOne(
+      { admin: userId }
+    )
+      .lean()
+      .exec(function (err, session) {
+        if (err) return reject(err);
+        if (!session) return reject("The current user doesn't have a session");
+        session.sharedItems.push(item);
+        session.save();
+        return resolve(session);
+      });
+  });
+};
+
 const removeItemFromCurrentUserAction = (itemId, userId) => {
   return new Promise((resolve, reject) => {
     UserModel.updateOne(
@@ -106,5 +122,6 @@ const removeItemFromCurrentUserAction = (itemId, userId) => {
 module.exports = {
   addItemToUserAction,
   addItemToCurrentUserAction,
-  removeItemFromCurrentUserAction
+  addItemToCurrentSessionAction,
+  removeItemFromCurrentUserAction,
 };

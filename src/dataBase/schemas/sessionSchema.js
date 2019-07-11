@@ -22,7 +22,7 @@ const SessionSchema = new Schema({
       ref: 'users',
     }
   ],
-  generalItems: [
+  sharedItems: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'items',

@@ -56,6 +56,7 @@ const typeDefs = gql`
   }
 
   type Query {
+    fakeLogin(email: String! password: String!): Message!
     getSession(sessionId: ID!): Session @AuthDirective
     getCurrentUserSession: Session @AuthDirective
   }
@@ -65,6 +66,7 @@ const typeDefs = gql`
     login(email: String! password: String!): Auth
     createSession(name: String!): Session! @AuthDirective
     addUserToSession(userId: ID! sessionId: ID!): Session! @AuthDirective
+    addItemToCurrentSession(item: ItemInput!): Session! @AuthDirective
     addItemToUser(userId: ID! item: ItemInput!): User! @AuthDirective
     addItemToCurrentUser(item: ItemInput!): User! @AuthDirective
     removeItemFromCurrentUser(itemId: ID!): User! @AuthDirective
